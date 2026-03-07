@@ -1,37 +1,27 @@
-# Informationsarchitektur (Domain-Modell)
-
-Definition der zentralen Entitäten für den `MyApp.Domain` Layer.
+# Informationsarchitektur (Domain-Modell) - Update V2
 
 ## Kern-Entitäten
 
 ### 1. Track
-Basis-Datensatz eines Musikstücks.
-- `Guid Id` (Primary Key)
+Erweitert um Metadaten für High-End UX.
+- `Guid Id`
 - `string Title`
 - `string Artist`
 - `string Album`
+- **`string Genre`** (Neu)
 - `double Bpm`
-- `string Key` (Original Key)
-- `string CamelotKey` (Umgerechnet für Harmonic Mixing)
+- `string Key`
+- `string CamelotKey`
 - `TimeSpan Duration`
 - `string FilePath`
+- **`string CoverArtPath`** (Neu: Link zum lokalen Image-Cache)
+- **`bool IsAnalyzed`** (Neu: Status für Waveform/Tag-Extraktion)
 - `DateTime ImportedAt`
 
 ### 2. Playlist
-Sammlung von Tracks mit Metadaten.
-- `Guid Id`
-- `string Name`
-- `List<Track> Items`
-- `bool IsAiGenerated`
-- `DateTime CreatedAt`
+(Unverändert)
 
-### 3. HarmonicRelation
-Berechnete Beziehung zwischen zwei Tracks.
-- `Guid SourceTrackId`
-- `Guid TargetTrackId`
-- `double CompatibilityScore` (0.0 - 1.0)
-- `string RelationType` (z.B. "Same Key", "Perfect Fifth", "Relative Major/Minor")
-
-## Value Objects (geplant)
-- **BpmRange:** Repräsentiert minimale und maximale BPM für Filter.
-- **KeyCompatibility:** Logik für das Camelot Wheel.
+## Geplante Services (Application Layer)
+- **IMetadataService:** Extrahiert Tags und Covers aus Files via TagLib#.
+- **IAudioStreamingService:** Verwaltet Buffer und Playback-State.
+- **ICoverCacheService:** Skaliert und speichert Cover-Bilder.

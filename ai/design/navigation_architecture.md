@@ -1,31 +1,22 @@
-# Navigationsarchitektur (Zielmodell)
+# Navigationsarchitektur & Kontextuelle IA
 
-Das Hauptfenster (`MainWindow`) dient als Shell für das Content-Routing.
+## UI-Zustände (Zustandsmaschine)
 
-## Struktur des MainWindow
-- **Sidebar:** Navigation zu den Hauptbereichen.
-- **Content Area:** Dynamische Anzeige der Views (UserControls).
-- **Player Bar:** (Optional im Footer) Aktueller Track und einfache Playback-Controls.
+### 1. Initial State (Empty)
+- **Sichtbar:** Begrüßungs-Screen, Import-Zentrum.
+- **Versteckt:** Player-Bar, Sidebar-Navigation (Library/Builder), Main DataGrid.
+- **Fokus:** Klare Handlungsaufforderung zum ersten Import.
 
-## Navigations-Bereiche
-1. **Dashboard (Home)**
-   - Statistiken der Bibliothek.
-   - Letzte Aktivitäten / Importe.
-   - Schnellstart für Playlist-Builder.
+### 2. Loaded State (Library Active)
+- **Sichtbar:** Sidebar, Suchfunktion, Track-Tabelle.
+- **Versteckt:** Player-Bar (solange kein Track gewählt).
+- **Übergang:** Animiertes Einblenden der Sidebar nach erfolgreichem Import.
 
-2. **Bibliothek (Library)**
-   - **Track-Liste:** Tabellarische Ansicht aller importierten Tracks.
-   - **Track-Details:** Editieren von Metadaten und Anzeige der Analyse-Ergebnisse.
+### 3. Playback State (Now Playing)
+- **Sichtbar:** Alle Elemente aus State 2 + **Player-Bar im Footer**.
+- **Fokus:** Wellenform, großes Cover-Art links, Title/Artist zentral.
 
-3. **Playlist-Builder (AI Engine)**
-   - Konfiguration der Regeln (BPM Range, Key-Kompatibilität).
-   - Vorschau der generierten Playlists.
-   - Export-Funktion.
-
-4. **Visualisierung (Graph)**
-   - Interaktive Darstellung der harmonischen Beziehungen (Harmonic Graph).
-
-5. **Einstellungen (Settings)**
-   - Pfade zu Rekordbox-Datenbanken.
-   - KI-Parameter (Gewichtung von BPM vs. Key).
-   - Theme-Einstellungen.
+## Player-Komponenten (Priorität)
+1. **Waveform:** Echtzeit-Visualisierung basierend auf vorgerenderten Peak-Daten.
+2. **Visuals:** Dominantes Cover-Art mit starkem Schatten (Corporate Design).
+3. **Controls:** Minimalistisch (Play/Pause, Cue, Progress).

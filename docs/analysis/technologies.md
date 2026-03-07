@@ -1,20 +1,19 @@
-# Technologien (IST-Zustand)
+# Technologien (IST-Zustand & Planung)
 
-## Runtime & Frameworks
-- **.NET Framework v4.7.2:** Aktuelle Basis für das Projekt `DJORGA.csproj` und die Kerndomäne in `/Core`.
-- **.NET 6.0 (net6.0-windows):** Basis für das Avalonia-UI Projekt `RekordboxAi.csproj`.
+## Frontend
+- Avalonia UI (v11.0.0)
+- CommunityToolkit.Mvvm (v8.4.0)
 
-## Bibliotheken & SDKs
-- **Avalonia (v11.0.0):** UI-Framework für plattformübergreifende Desktop-Anwendungen.
-- **Avalonia.ReactiveUI:** Implementierung des MVVM-Patterns für Avalonia.
-- **Microsoft.NET.Sdk:** Modernes SDK-Format für das UI-Projekt.
-- **MSBuild v15.0:** Für das Legacy-Core-Projekt.
+## Backend
+- .NET 8.0 LTS
+- Entity Framework Core 8.0.13 (SQLite)
 
-## Programmiersprachen
-- **C#:** Hauptsprache für Logik und UI.
-- **XAML (Avalonia Dialekt):** Für die deklarative UI-Beschreibung.
+## Media & Performance (Neu geplant)
+- **TagLib#:** Für Multi-Format Metadaten Extraktion (.aiff, .flac, .wav).
+- **NAudio:** Für asynchrones Audio-Streaming und Waveform-Berechnung.
+- **SkiaSharp:** Für performante Bildbearbeitung (Cover-Art Thumbnails).
 
-## Zukünftig geplante Technologien (laut Briefing)
-- **.NET 8:** Geplantes Upgrade für die gesamte Solution.
-- **CommunityToolkit.Mvvm:** Ablösung/Ergänzung für ReactiveUI im neuen App-Modell.
-- **PlantUML:** Für die Prozessvisualisierung.
+## Tools
+- Gemini CLI
+- PlantUML
+- Git

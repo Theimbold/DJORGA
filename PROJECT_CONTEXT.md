@@ -1,39 +1,23 @@
 # Projekt: DJORGA
 
 ## Vision
-DJORGA ist eine moderne Desktop-Anwendung zur Verwaltung von DJ-Musikbibliotheken, die KI-gestützte Playlist-Erstellung und Rekordbox-Integration bietet. Das System zielt darauf ab, DJ-Workflows durch intelligente Automatisierung und eine klare, plattformübergreifende Benutzeroberfläche zu optimieren.
+DJORGA ist eine moderne Desktop-Anwendung zur Verwaltung von DJ-Musikbibliotheken, die KI-gestützte Playlist-Erstellung und Rekordbox-Integration bietet. Das System zielt darauf ab, DJ-Workflows durch intelligente Automatisierung und eine klare, plattformübergreifend einheitliche Benutzeroberfläche zu optimieren.
 
 ## Ziel des Projekts
-Ziel ist die Transformation des bestehenden Prototyps in eine robuste, skalierbare Anwendung auf Basis der **Clean Architecture**. Dies umfasst:
-- Vollständige Integration von Rekordbox-Daten.
-- KI-gestützte Analyse und Playlist-Generierung.
-- Eine moderne, performante Avalonia-UI.
-- Saubere Trennung von Geschäftslogik, Daten und UI.
+Transformation des Prototyps in eine High-Performance Anwendung auf Basis der Clean Architecture mit Fokus auf High-End UX und Audio-Streaming.
 
 ## Technologien
-- **Frontend:** Avalonia UI (v11.0.0), ReactiveUI.
-- **Backend:** .NET 6 (UI), .NET Framework 4.7.2 (Legacy Core).
-- **Konzepte:** Clean Architecture, MVVM, Dependency Injection (geplant).
-- **Tools:** Gemini CLI, PlantUML, Git.
+- **Frontend:** Avalonia UI (v11.0.0), CommunityToolkit.Mvvm.
+- **Backend:** .NET 8, EF Core (SQLite).
+- **Media:** TagLib# (Metadata), SkiaSharp (Images), NAudio (Audio Engine).
 
-## Architektur
-Das Projekt befindet sich in der Umstellungsphase auf **Clean Architecture**.
-Die aktuelle Struktur sieht folgende Layer vor:
-- **UI:** `RekordboxAi` (Avalonia) / `MyApp.Desktop` (Ziel).
-- **Application:** `MyApp.Application` (Skelett).
-- **Domain:** `MyApp.Domain` / `Core` (Bestand).
-- **Infrastructure:** `MyApp.Infrastructure` / `Infrastructure` (Bestand).
-
-## MVP Vision
-Der erste MVP soll folgende Features enthalten:
-1. Rekordbox XML Import.
-2. Bibliotheks-Übersicht.
-3. Basis KI-Playlist-Builder.
-4. Navigation zwischen Dashboard und Bibliothek.
-5. Lokale Datenspeicherung.
+## Architektur & IA
+- **Clean Architecture:** Strenge Layer-Trennung.
+- **Kontextuelle Sichtbarkeit:** UI-Elemente (Player, Listen) erscheinen erst, wenn Daten vorhanden sind.
+- **Performance:** Asynchrones Streaming und Peak-Caching für große Dateien (100MB+).
 
 ## Hauptfeatures
-- **Rekordbox-Integration:** Einlesen und Verarbeiten von Rekordbox XML-Dateien.
-- **Harmonic Linking:** Analyse von BPM und Tonarten für optimale Übergänge.
-- **KI-Playlist-Builder:** Automatisierte Erstellung von Playlists basierend auf vordefinierten Regeln und KI-Scoring.
-- **Graph-Visualisierung:** Darstellung von harmonischen Beziehungen zwischen Tracks.
+- **Rekordbox-Integration:** XML Import.
+- **Media Engine:** Multi-Format Metadaten & Cover-Extraction.
+- **High-Performance Player:** Interaktive Waveform, lückenloses Streaming.
+- **Corporate Design:** Abgerundete Formen, Schatten-basierte Tiefe, keine harten Konturen.

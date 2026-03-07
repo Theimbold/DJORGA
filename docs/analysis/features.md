@@ -1,20 +1,20 @@
-# Features & Funktionalität (IST-Zustand)
+# Feature-Übersicht (Implementierter Stand)
 
-## Vorhandene Features
+## 1. Kern-Funktionen
+- [x] **Rekordbox XML Import:** Schnelles Einlesen von Sammlungen (> 7000 Tracks getestet).
+- [x] **Safe-Import:** Automatischer Dubletten-Check basierend auf Dateipfaden.
+- [x] **XML Roundtrip:** Export-Service zur Erstellung valider Rekordbox XML-Dateien.
 
-### 1. Daten-Integration
-- **Rekordbox XML Import:** Fähigkeit, XML-Exporte aus Pioneer Rekordbox zu lesen.
-- **Metadaten-Extraktion:** Auslesen von Track-Informationen wie Title, Artist, BPM und Key.
+## 2. Media Engine
+- [x] **Multi-Format Support:** Direktes Auslesen von Metadaten aus .wav, .aiff, .flac, .mp3 via TagLib#.
+- [x] **Visual Asset Management:** Automatisches Extrahieren und Cachen von Cover-Arts (Thumbnails).
+- [x] **Waveform Engine:** Vorberechnung von Amplituden-Peaks für verzögerungsfreie Visualisierung.
 
-### 2. Analyse & Scoring
-- **Harmonic Linking:** Logik zur Berechnung von harmonischen Kompatibilitäten zwischen Tracks (Camelot Wheel / Circle of Fifths Prinzipien).
-- **Rule-Based Building:** Erstellung von Playlists nach festen Regeln.
+## 3. High-Performance Audio
+- [x] **Streaming-Player:** Sofortiger Wiedergabestart durch inkrementelles Buffering (NAudio).
+- [x] **Interactive Controls:** Flüssiges Spulen (Seeking) und Echtzeit-Fortschrittsanzeige.
 
-### 3. Benutzeroberfläche
-- **Bibliotheks-Übersicht:** Auflistung der Tracks.
-- **Interaktive UI:** Grundlegende MVVM-Struktur mit ReactiveUI (Command-Handling).
-- **Graph-Ansicht:** (In Vorbereitung) Visualisierung von Musik-Graphen.
-
-### 4. Playlist-Management
-- **AI-Generation:** Automatisierte Erstellung von Playlist-Objekten im Speicher.
-- **Export (geplant):** Vorbereitung für Rekordbox XML Writer.
+## 4. User Experience (UX)
+- [x] **Corporate Design:** Abgerundete Ecken (20px), Schatten-basierte Tiefe, minimalistisches Dark-Theme.
+- [x] **Onboarding Wizard:** Geführter Import-Prozess mit automatischer Pfad-Erkennung für Rekordbox.
+- [x] **Reaktive Library:** Automatische Aktualisierung der Liste bei Hintergrund-Analysen; Selektions-Stabilität gewahrt.

@@ -1,22 +1,33 @@
-# Architektur (IST-Zustand)
+# Architektur-Dokumentation (Stand V1.0)
 
-## Übersicht
-Das Projekt befindet sich in einem Übergangszustand zwischen einer klassischen monolithischen Struktur (Legacy) und einer modernen **Clean Architecture**.
+## 1. Übersicht
+DJORGA basiert auf der **Clean Architecture**. Das System ist in vier entkoppelte Layer unterteilt, um maximale Testbarkeit und Performance zu gewährleisten.
 
-## Layer-Analyse
+## 2. Layer-Struktur
 
-### 1. UI Layer
-- **RekordboxAi:** Aktuelles Hauptprojekt für die Oberfläche. Verwendet Avalonia.
-- **UI Verzeichnis:** Enthält UI-Komponenten, die noch nicht vollständig in das `RekordboxAi` Projekt integriert zu sein scheinen (lokaler Filesystem-Stand vs. Projekt-Inklusion).
+### MyApp.Domain (Kern)
+- **Entities:** `Track`, `Playlist` (Implementieren `INotifyPropertyChanged` für reaktive UI).
+- **Value Objects:** `BpmRange`, `KeyCompatibility` (Camelot Wheel Logik).
+- **Regeln:** Domänenspezifische Validierung und Logik.
 
-### 2. Application/Services Layer
-- **Services Verzeichnis:** Beinhaltet Geschäftslogik wie den `AiPlaylistBuilder`. Diese ist aktuell als lose Klassenbibliothek-Struktur vorhanden, aber noch nicht in ein formalisiertes `MyApp.Application` Projekt überführt.
+### MyApp.Application (Logik)
+- **Interfaces:** Abstraktionen für Repositories (`ITrackRepository`), Audio (`IAudioPlayerService`), Metadata (`IMetadataService`) und UI (`INavigationService`, `IFilePickerService`).
+- **Use Cases:** `ImportRekordboxXmlUseCase` (Orchestrierung von Import, DB-Speicherung und Hintergrund-Analyse).
+- **DTOs:** `TrackMetadata` für den Datenaustausch.
 
-### 3. Domain Layer
-- **Core Verzeichnis:** Enthält die fundamentalen Entitäten (`Track`, `Playlist`). Diese bilden das Herzstück des Systems.
+### MyApp.Infrastructure (Technik)
+- **Persistence:** SQLite mit EF Core 8.0.13. Automatisches DB-Initialisierungs-System.
+- **External Services:** 
+  - `RekordboxXmlService`: Parsing und Generierung von Rekordbox XML (Roundtrip).
+  - `TagLibMetadataService`: Extraktion von Tags aus .aiff, .flac, .wav, .mp3.
+  - `LocalCoverCacheService`: Bildskalierung via SkiaSharp und Caching in AppData.
+  - `NAudioPlayerService`: High-Performance Audio-Streaming (Streaming-Ready für 100MB+ Files).
+  - `NAudioWaveformService`: Peak-Extraktion und Binär-Caching für Wellenformen.
 
-### 4. Infrastructure Layer
-- **Infrastructure Verzeichnis:** Beinhaltet technische Details wie `RekordboxXmlReader`. Diese hängen aktuell direkt von den Core-Entitäten ab.
+### MyApp.Desktop (UI)
+- **Framework:** Avalonia UI 11.0.
+- **Pattern:** MVVM mit CommunityToolkit.Mvvm (Source Generators).
+- **UX-Features:** Kontextuelle Sichtbarkeit (Onboarding vs. Library), reaktive Echtzeit-Updates ohne Refresh-Button, CrossFade Transitions.
 
-## Modulare Abhängigkeiten
-Die Abhängigkeiten sind aktuell noch unstrukturiert (Referenzierung teilweise über lose Dateien im Filesystem statt sauberer Projekt-Referenzen). Die `MyApp.*` Layer sind als Zielstruktur angelegt, aber noch nicht aktiv verknüpft.
+## 3. Datenfluss (Reaktiver Kreislauf)
+`Import/Analyse` → `Repository` → `Event (TrackAdded)` → `ViewModel` → `UI (Auto-Update)`
