@@ -1,0 +1,28 @@
+@startuml
+title Rekordbox XML Import Prozess
+
+start
+
+:User wählt XML-Datei aus;
+:Validierung der Dateiexistenz;
+
+if (Datei gültig?) then (yes)
+  :RekordboxXmlReader initialisieren;
+  :XML-Struktur parsen;
+  
+  while (Weitere Tracks vorhanden?) is (yes)
+    :Metadaten extrahieren (BPM, Key, Path);
+    :Track-Entität erstellen;
+    :In temporäre Liste einfügen;
+  endwhile
+  
+  :Dubletten-Check gegen lokale DB;
+  :Tracks in Persistence Layer speichern;
+  :UI-Bibliothek aktualisieren;
+  :Erfolgsmeldung anzeigen;
+else (no)
+  :Fehlermeldung anzeigen (Ungültiges Format);
+endif
+
+stop
+@enduml

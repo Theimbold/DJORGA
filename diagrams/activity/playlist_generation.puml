@@ -1,0 +1,31 @@
+@startuml
+title KI Playlist-Builder Workflow
+
+start
+
+:User öffnet Playlist-Builder;
+:Auswahl des Start-Tracks oder Referenz-Genres;
+:Einstellen der Filter (BPM Range, Harmonische Tiefe);
+
+:Abfrage kompatibler Tracks aus der DB;
+
+partition "AI Scoring Engine" {
+  :BPM-Differenz berechnen;
+  :Harmonische Distanz (Camelot Wheel) prüfen;
+  :Gewichtung der Faktoren anwenden;
+  :Ranking der Kandidaten erstellen;
+}
+
+:Top X Tracks auswählen;
+:Playlist-Entwurf generieren;
+
+if (Vorschau okay?) then (yes)
+  :Playlist-Entität speichern;
+  :In UI anzeigen;
+else (no)
+  :Parameter anpassen;
+  backward:Parameter anpassen;
+endif
+
+stop
+@enduml
