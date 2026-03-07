@@ -1,0 +1,10 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Class="RekordboxAi.MainWindow"
+        Title="{Binding Title}">
+  <StackPanel Margin="16">
+    <TextBlock Text="Hello from Avalonia + MVVM" FontSize="18"/>
+    <TextBlock Text="{Binding Title}" />
+    <Button Content="Click me" Command="{Binding ClickCommand}" Margin="0,8,0,0"/>
+  </StackPanel>
+</Window>
