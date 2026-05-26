@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace MyApp.Domain.Entities
 {
@@ -19,7 +20,7 @@ namespace MyApp.Domain.Entities
         /// </summary>
         public void AddTrack(Track track)
         {
-            if (track != null && !Items.Contains(track))
+            if (track != null && !Items.Any(t => t.Id == track.Id))
             {
                 Items.Add(track);
             }

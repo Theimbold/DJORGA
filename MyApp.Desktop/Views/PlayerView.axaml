@@ -1,0 +1,83 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="using:MyApp.Desktop.ViewModels"
+             xmlns:conv="using:MyApp.Desktop.Converters"
+             xmlns:dto="using:MyApp.Application.DTOs"
+             xmlns:ctrl="using:MyApp.Desktop.Controls"
+             mc:Ignorable="d" d:DesignWidth="1000" d:DesignHeight="100"
+             x:Class="MyApp.Desktop.Views.PlayerView"
+             x:DataType="vm:PlayerViewModel">
+    
+    <UserControl.Resources>
+        <conv:BitmapAssetValueConverter x:Key="BitmapConverter" />
+        <conv:WaveformScaleConverter x:Key="WaveformScaleConverter" />
+    </UserControl.Resources>
+
+    <Border Background="#1a1a1a" Height="100" Padding="15" BoxShadow="0 -5 20 0 #40000000">
+        <Grid ColumnDefinitions="Auto, 200, *, Auto">
+            
+            <!-- 1. Cover Art -->
+            <Border Grid.Column="0" Width="70" Height="70" CornerRadius="10" ClipToBounds="True" Background="#333">
+                <Image Source="{Binding Track.CoverArtPath, Converter={StaticResource BitmapConverter}}" Stretch="UniformToFill" />
+            </Border>
+
+            <!-- 2. Meta Info -->
+            <StackPanel Grid.Column="1" VerticalAlignment="Center" Margin="20,0">
+                <TextBlock Text="{Binding Track.Title}" FontSize="16" FontWeight="Bold" Foreground="White" TextTrimming="CharacterEllipsis"/>
+                <TextBlock Text="{Binding Track.Artist}" FontSize="14" Foreground="Gray" TextTrimming="CharacterEllipsis"/>
+            </StackPanel>
+
+            <!-- 3. Waveform & Progress -->
+            <Panel Grid.Column="2" Margin="20,0" VerticalAlignment="Center">
+                <!-- Wellenform Hintergrund (SkiaSharp) -->
+                <ctrl:WaveformControl Peaks="{Binding WaveformPeaks}" 
+                                      Progress="{Binding Position}"
+                                      Duration="{Binding Duration}"
+                                      Height="60" 
+                                      VerticalAlignment="Center"/>
+                
+                <!-- Interaktiver Progress Slider (Transparentes Overlay für Seeking) -->
+                <Slider Value="{Binding Position}" 
+                        Maximum="{Binding Duration}" 
+                        Height="60"
+                        VerticalAlignment="Center"
+                        Background="Transparent"
+                        BorderThickness="0"
+                        Padding="0"
+                        Margin="0">
+                    <Slider.Styles>
+                        <Style Selector="Slider /template/ RepeatButton#PART_SelectionRange">
+                            <Setter Property="Background" Value="Transparent" />
+                        </Style>
+                        <Style Selector="Slider /template/ Track#PART_Track">
+                            <Setter Property="Opacity" Value="0" />
+                        </Style>
+                        <Style Selector="Slider /template/ Thumb">
+                            <Setter Property="Width" Value="2" />
+                            <Setter Property="Height" Value="60" />
+                            <Setter Property="Background" Value="White" />
+                            <Setter Property="BorderThickness" Value="0" />
+                            <Setter Property="Template">
+                                <ControlTemplate>
+                                    <Border Background="White" Width="2" Height="60" BoxShadow="0 0 10 0 #80FFFFFF"/>
+                                </ControlTemplate>
+                            </Setter>
+                        </Style>
+                    </Slider.Styles>
+                </Slider>
+            </Panel>
+
+            <!-- 4. Controls -->
+            <StackPanel Grid.Column="3" Orientation="Horizontal" Spacing="10" VerticalAlignment="Center" Margin="20,0">
+                <Button Command="{Binding PlayCommand}" IsVisible="{Binding !IsPlaying}" Width="50" Height="50" CornerRadius="25">
+                    <Path Data="M8 5v14l11-7z" Fill="White" Stretch="Uniform" Width="15"/>
+                </Button>
+                <Button Command="{Binding PauseCommand}" IsVisible="{Binding IsPlaying}" Width="50" Height="50" CornerRadius="25">
+                    <Path Data="M6 19h4V5H6v14zm8-14v14h4V5h-4z" Fill="White" Stretch="Uniform" Width="15"/>
+                </Button>
+            </StackPanel>
+        </Grid>
+    </Border>
+</UserControl>

@@ -1,0 +1,78 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="using:MyApp.Desktop.ViewModels"
+             mc:Ignorable="d" d:DesignWidth="250" d:DesignHeight="600"
+             x:Class="MyApp.Desktop.Views.SidebarView"
+             x:DataType="vm:SidebarViewModel">
+    
+    <Border Background="#1a1a1a" Width="200" Padding="15">
+        <StackPanel Spacing="10">
+            <TextBlock Text="DJORGA" 
+                       FontSize="20" 
+                       FontWeight="Bold" 
+                       Margin="10,0,0,30" 
+                       Foreground="White"
+                       LetterSpacing="2"/>
+
+            <ListBox Background="Transparent" 
+                     BorderThickness="0" 
+                     SelectedIndex="{Binding SelectedIndex}">
+                <ListBox.Styles>
+                    <Style Selector="ListBoxItem">
+                        <Setter Property="Background" Value="Transparent" />
+                        <Setter Property="Padding" Value="10" />
+                        <Setter Property="Margin" Value="0,2" />
+                        <Setter Property="CornerRadius" Value="12" />
+                    </Style>
+                    <Style Selector="ListBoxItem:selected /template/ ContentPresenter">
+                        <Setter Property="Background" Value="#333333" />
+                        <Setter Property="BoxShadow" Value="0 0 10 0 #40FFFFFF" />
+                        <Setter Property="TextBlock.Foreground" Value="White" />
+                    </Style>
+                </ListBox.Styles>
+
+                <ListBoxItem>
+                    <StackPanel Orientation="Horizontal" Spacing="10">
+                        <Path Data="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z" 
+                              Fill="White" Width="18" Height="18" Stretch="Uniform"/>
+                        <TextBlock Text="Dashboard" VerticalAlignment="Center" FontSize="14"/>
+                    </StackPanel>
+                </ListBoxItem>
+
+                <ListBoxItem>
+                    <StackPanel Orientation="Horizontal" Spacing="10">
+                        <Path Data="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z" 
+                              Fill="White" Width="18" Height="18" Stretch="Uniform"/>
+                        <TextBlock Text="Library" VerticalAlignment="Center" FontSize="14"/>
+                    </StackPanel>
+                </ListBoxItem>
+
+                <ListBoxItem>
+                    <StackPanel Orientation="Horizontal" Spacing="10">
+                        <Path Data="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z" 
+                              Fill="White" Width="18" Height="18" Stretch="Uniform"/>
+                        <TextBlock Text="AI Builder" VerticalAlignment="Center" FontSize="14"/>
+                    </StackPanel>
+                </ListBoxItem>
+
+                <ListBoxItem>
+                    <StackPanel Orientation="Horizontal" Spacing="10">
+                        <Path Data="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z" 
+                              Fill="White" Width="18" Height="18" Stretch="Uniform"/>
+                        <TextBlock Text="Harmonic Map" VerticalAlignment="Center" FontSize="14"/>
+                    </StackPanel>
+                </ListBoxItem>
+
+                <ListBoxItem>
+                    <StackPanel Orientation="Horizontal" Spacing="10">
+                        <Path Data="M19.14,12.94c0.04-0.3,0.06-0.61,0.06-0.94c0-0.32-0.02-0.64-0.07-0.94l2.03-1.58c0.18-0.14,0.23-0.41,0.12-0.61 l-1.92-3.32c-0.12-0.22-0.37-0.29-0.59-0.22l-2.39,0.96c-0.5-0.38-1.03-0.7-1.62-0.94L14.4,2.81c-0.04-0.24-0.24-0.41-0.48-0.41 h-3.84c-0.24,0-0.43,0.17-0.47,0.41L9.25,5.35C8.66,5.59,8.12,5.92,7.63,6.29L5.24,5.33c-0.22-0.08-0.47,0-0.59,0.22L2.74,8.87 C2.62,9.08,2.66,9.34,2.84,9.48l2.03,1.58C4.82,11.36,4.8,11.66,4.8,12c0,0.33,0.02,0.64,0.07,0.94l-2.03,1.58 c-0.18,0.14-0.23,0.41-0.12,0.61l1.92,3.32c0.12,0.22,0.37,0.29,0.59,0.22l2.39-0.96c0.5,0.38,1.03,0.7,1.62,0.94l0.36,2.54 c0.05,0.24,0.24,0.41,0.48,0.41h3.84c0.24,0,0.44-0.17,0.47-0.41l0.36-2.54c0.59-0.24,1.13-0.56,1.62-0.94l2.39,0.96 c0.22,0.08,0.47,0,0.59-0.22l1.92-3.32c0.12-0.22,0.07-0.47-0.12-0.61L19.14,12.94z M12,15.5c-1.93,0-3.5-1.57-3.5-3.5 s1.57-3.5,3.5-3.5s3.5,1.57,3.5,3.5S13.93,15.5,12,15.5z" 
+                              Fill="White" Width="18" Height="18" Stretch="Uniform"/>
+                        <TextBlock Text="Settings" VerticalAlignment="Center" FontSize="14"/>
+                    </StackPanel>
+                </ListBoxItem>
+            </ListBox>
+        </StackPanel>
+    </Border>
+</UserControl>

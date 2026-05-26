@@ -44,8 +44,26 @@ namespace MyApp.Infrastructure.Persistence.Repositories
         public async Task UpdateAsync(Playlist playlist)
         {
             if (playlist == null) throw new ArgumentNullException(nameof(playlist));
-            _context.Playlists.Update(playlist);
-            await _context.SaveChangesAsync();
+
+            var existing = await _context.Playlists
+                .Include(p => p.Items)
+                .FirstOrDefaultAsync(p => p.Id == playlist.Id);
+
+            if (existing != null)
+            {
+                existing.Name = playlist.Name;
+                
+                // Items synchronisieren
+                existing.Items.Clear();
+                foreach (var item in playlist.Items)
+                {
+                    // Track aus dem Context holen, um Attach-Fehler zu vermeiden
+                    var track = await _context.Tracks.FindAsync(item.Id);
+                    if (track != null) existing.Items.Add(track);
+                }
+
+                await _context.SaveChangesAsync();
+            }
         }
 
         public async Task DeleteAsync(Guid id)

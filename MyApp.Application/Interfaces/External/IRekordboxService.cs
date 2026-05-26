@@ -13,8 +13,9 @@ namespace MyApp.Application.Interfaces.External
         /// Liest die gesamte Rekordbox-Bibliothek aus einer XML-Datei ein.
         /// </summary>
         /// <param name="filePath">Pfad zur Rekordbox XML-Datei.</param>
+        /// <param name="progress">Optionales Progress-Objekt für den Fortschritt (0.0 bis 1.0).</param>
         /// <returns>Eine Liste der eingelesenen Tracks.</returns>
-        Task<IEnumerable<Track>> ParseLibraryAsync(string filePath);
+        Task<IEnumerable<Track>> ParseLibraryAsync(string filePath, IProgress<double>? progress = null);
 
         /// <summary>
         /// Liest spezifische Playlists aus der Rekordbox XML-Datei ein.

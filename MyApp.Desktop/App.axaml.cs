@@ -5,16 +5,23 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using MyApp.Application.Interfaces.External;
 using MyApp.Application.Interfaces.Persistence;
+using MyApp.Application.Interfaces.UI;
+using MyApp.Application.Interfaces.Services;
+using MyApp.Application.Services;
 using MyApp.Application.UseCases.Rekordbox;
+using MyApp.Application.UseCases.Library;
 using MyApp.Infrastructure.External.Rekordbox;
+using MyApp.Infrastructure.External.Metadata;
+using MyApp.Infrastructure.External.Audio;
 using MyApp.Infrastructure.Persistence.EntityFramework;
 using MyApp.Infrastructure.Persistence.Repositories;
 using MyApp.Desktop.ViewModels;
+using MyApp.Desktop.Services;
 using System;
+using System.Threading.Tasks;
 
 namespace MyApp.Desktop
 {
-    // Explizite Angabe der Basisklasse, um Konflikt mit MyApp.Application Namespace zu lösen
     public partial class App : Avalonia.Application
     {
         public IServiceProvider? Services { get; private set; }
@@ -30,9 +37,12 @@ namespace MyApp.Desktop
             ConfigureServices(serviceCollection);
             Services = serviceCollection.BuildServiceProvider();
 
-            // Datenbank initialisieren
             var dbContext = Services.GetRequiredService<AppDbContext>();
-            DbInitializer.InitializeAsync(dbContext).Wait();
+            // Task 095: Asynchrone Initialisierung ohne den UI-Thread zu blockieren
+            _ = Task.Run(async () => 
+            {
+                await DbInitializer.InitializeAsync(dbContext);
+            });
 
             if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
             {
@@ -54,16 +64,49 @@ namespace MyApp.Desktop
             
             services.AddScoped<ITrackRepository, SqliteTrackRepository>();
             services.AddScoped<IPlaylistRepository, SqlitePlaylistRepository>();
+            services.AddScoped<ISmartCollectionRepository, SqliteSmartCollectionRepository>();
 
-            // 2. Infrastructure: External Services
-            services.AddScoped<IRekordboxService, RekordboxXmlService>();
+            // 2. Infrastructure: External & UI Services
+            var rekordboxService = new RekordboxXmlService();
+            services.AddSingleton<IRekordboxService>(rekordboxService);
+            services.AddSingleton<IRekordboxExportService>(rekordboxService);
+            services.AddSingleton<IRekordboxPathService, WindowsRekordboxPathService>();
+            
+            services.AddScoped<IMetadataService, TagLibMetadataService>();
+            services.AddScoped<ICoverCacheService, LocalCoverCacheService>();
+            services.AddScoped<IWaveformService, NAudioWaveformService>();
+            services.AddSingleton<IAudioPlayerService, NAudioPlayerService>();
+            
+            services.AddSingleton<IAppStateService, AppStateService>();
+            services.AddSingleton<INavigationService, DesktopNavigationService>();
+            services.AddSingleton<IFilePickerService>(x => new AvaloniaFilePickerService(() => 
+                ((IClassicDesktopStyleApplicationLifetime)Avalonia.Application.Current!.ApplicationLifetime!).MainWindow!));
+            services.AddSingleton<Func<MainViewModel>>(x => () => x.GetRequiredService<MainViewModel>());
+
+            // 2.1 AI Playlist Builder Services
+            services.AddScoped<IHarmonicScorer, HarmonicScoringService>();
+            services.AddScoped<IAiPlaylistBuilder, AiPlaylistBuilderService>();
+            services.AddSingleton<IBackgroundAnalysisService, BackgroundAnalysisService>();
+            services.AddScoped<RuleEvaluatorService>();
+            services.AddScoped<HarmonicGraphService>();
 
             // 3. Application: Use Cases
             services.AddTransient<ImportRekordboxXmlUseCase>();
+            services.AddTransient<UpdateTrackMetadataUseCase>();
+            services.AddTransient<DeleteTrackUseCase>();
+            services.AddTransient<ExportSmartCollectionUseCase>();
 
             // 4. UI: ViewModels
             services.AddSingleton<MainViewModel>();
+            services.AddSingleton<SidebarViewModel>();
+            services.AddSingleton<PlayerViewModel>();
+            services.AddTransient<OnboardingViewModel>();
+            services.AddTransient<ImportWizardViewModel>();
             services.AddTransient<LibraryViewModel>();
+            services.AddTransient<DashboardViewModel>();
+            services.AddTransient<AIBuilderViewModel>();
+            services.AddTransient<HarmonicMapViewModel>();
+            services.AddTransient<SettingsViewModel>();
         }
 
         public static new App? Current => (App?)Avalonia.Application.Current;

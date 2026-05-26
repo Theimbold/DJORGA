@@ -1,0 +1,9 @@
+11.04.2026 18:33:59: [UseCase] Starte Import UseCase für: C:\Users\Tins\Desktop\Rekordbox_Newest_Version.xml
+11.04.2026 18:33:59: Starte XML-Parsing für: C:\Users\Tins\Desktop\Rekordbox_Newest_Version.xml
+11.04.2026 18:33:59: Backup erstellt unter: C:\Users\Tins\source\repos\DJORGA\MyApp.Desktop\bin\Debug\net8.0\backups\Rekordbox_Newest_Version_backup_20260411_183359.xml
+11.04.2026 18:34:00: Anzahl gefundener TRACK-Elemente in XML: 16431
+11.04.2026 18:34:00: Erfolgreich konvertierte Tracks: 4553
+11.04.2026 18:34:00: [UseCase] Service hat 4553 Tracks aus XML geliefert.
+11.04.2026 18:34:00: [UseCase] Datenbank enthält bereits 0 Tracks.
+11.04.2026 18:34:00: [UseCase] Speichere 4552 neue Tracks als Batch in der Datenbank...
+11.04.2026 18:34:00: [UseCase] Import abgeschlossen. 4552 neue Tracks hinzugefügt.

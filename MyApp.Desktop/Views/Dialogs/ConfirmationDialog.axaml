@@ -1,0 +1,49 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vm="using:MyApp.Desktop.ViewModels"
+        mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="250"
+        x:Class="MyApp.Desktop.Views.Dialogs.ConfirmationDialog"
+        x:DataType="vm:ConfirmationViewModel"
+        Title="Confirmation"
+        Width="450" Height="300"
+        WindowStartupLocation="CenterOwner"
+        SystemDecorations="None"
+        Background="Transparent"
+        TransparencyLevelHint="AcrylicBlur">
+
+    <Border Background="#252525" 
+            CornerRadius="20" 
+            BorderBrush="#333" 
+            BorderThickness="1"
+            BoxShadow="0 10 30 0 #80000000"
+            Margin="20">
+        <Grid RowDefinitions="Auto, *, Auto, Auto" Margin="30">
+            <!-- Header -->
+            <TextBlock Grid.Row="0" Text="{Binding Title}" FontSize="20" FontWeight="SemiBold" Margin="0,0,0,15"/>
+
+            <!-- Message -->
+            <TextBlock Grid.Row="1" Text="{Binding Message}" TextWrapping="Wrap" Foreground="#CCC" FontSize="14" LineHeight="20"/>
+
+            <!-- Secondary Option (e.g., delete physical file) -->
+            <CheckBox Grid.Row="2" 
+                      IsChecked="{Binding IsSecondaryOptionChecked}" 
+                      IsVisible="{Binding ShowSecondaryOption}"
+                      Content="{Binding SecondaryOptionText}"
+                      Margin="0,20,0,0"
+                      FontSize="12"/>
+
+            <!-- Actions -->
+            <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Right" Spacing="15" Margin="0,30,0,0">
+                <Button Content="{Binding CancelButtonText}" Command="{Binding CancelCommand}" Background="Transparent" BorderThickness="0"/>
+                <Button Content="{Binding ConfirmButtonText}" 
+                        Command="{Binding ConfirmCommand}" 
+                        Background="#FF5252" 
+                        Foreground="White" 
+                        Padding="25,10"
+                        CornerRadius="10"/>
+            </StackPanel>
+        </Grid>
+    </Border>
+</Window>

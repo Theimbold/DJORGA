@@ -1,0 +1,22 @@
+07.03.2026 02:58:31: --- Neuer Import-Versuch gestartet ---
+07.03.2026 02:58:31: Starte XML-Parsing für: D:\Cloud Option DJ team Dropbox\Tim Heimbold\rekordbox\rekordbox.xml.xml
+07.03.2026 02:58:31: Anzahl gefundener TRACK-Elemente in XML: 7443
+07.03.2026 02:58:31: Erfolgreich konvertierte Tracks: 3645
+07.03.2026 02:58:41: UseCase beendet. 3645 neue Tracks gespeichert.
+07.03.2026 03:04:21: --- Neuer Import-Versuch gestartet ---
+07.03.2026 03:04:21: Starte XML-Parsing für: D:\Cloud Option DJ team Dropbox\Tim Heimbold\rekordbox\rekordbox.xml.xml
+07.03.2026 03:04:21: Anzahl gefundener TRACK-Elemente in XML: 7443
+07.03.2026 03:04:21: Erfolgreich konvertierte Tracks: 3645
+07.03.2026 03:04:21: UseCase beendet. 0 neue Tracks gespeichert.
+07.03.2026 03:07:04: Starte XML-Parsing für: D:\Cloud Option DJ team Dropbox\Tim Heimbold\rekordbox\rekordbox.xml.xml
+07.03.2026 03:07:04: Anzahl gefundener TRACK-Elemente in XML: 7443
+07.03.2026 03:07:04: Erfolgreich konvertierte Tracks: 3645
+07.03.2026 03:11:30: Starte XML-Parsing für: D:\Cloud Option DJ team Dropbox\Tim Heimbold\rekordbox\rekordbox.xml.xml
+07.03.2026 03:11:30: Anzahl gefundener TRACK-Elemente in XML: 7443
+07.03.2026 03:11:30: Erfolgreich konvertierte Tracks: 3645
+07.03.2026 03:14:37: Starte XML-Parsing für: D:\Cloud Option DJ team Dropbox\Tim Heimbold\rekordbox\rekordbox.xml.xml
+07.03.2026 03:14:37: Anzahl gefundener TRACK-Elemente in XML: 7443
+07.03.2026 03:14:37: Erfolgreich konvertierte Tracks: 3645
+07.03.2026 03:18:10: Starte XML-Parsing für: D:\Cloud Option DJ team Dropbox\Tim Heimbold\rekordbox\rekordbox.xml.xml
+07.03.2026 03:18:11: Anzahl gefundener TRACK-Elemente in XML: 7443
+07.03.2026 03:18:11: Erfolgreich konvertierte Tracks: 3645

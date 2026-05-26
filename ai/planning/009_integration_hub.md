@@ -1,7 +1,7 @@
 # Epic 009: Integration Hub & XML Roundtrip
 
 ## Status
-In Planung
+In Arbeit
 
 ## Beschreibung
 Implementierung eines zentralen Hubs für den Datenaustausch mit Rekordbox. Fokus liegt auf der Benutzerführung beim Import (Assistent) und der Möglichkeit, Daten (Playlists) zurück in das Rekordbox-Format zu exportieren.
@@ -9,8 +9,8 @@ Implementierung eines zentralen Hubs für den Datenaustausch mit Rekordbox. Foku
 ## Features & Tasks
 
 ### Feature 1: Integration Assistant (Import Hilfe)
-- [ ] **Task 044:** Implementierung eines geführten Import-Wizards (UI-Komponente).
-- [ ] **Task 045:** Auto-Detection Logik für Standard-Rekordbox Pfade auf Windows.
+- [x] **Task 044:** Implementierung eines geführten Import-Wizards (UI-Komponente).
+- [x] **Task 045:** Auto-Detection Logik für Standard-Rekordbox Pfade auf Windows.
 
 ### Feature 2: XML Export Service (Roundtrip)
 - [ ] **Task 046:** Definition des `IRekordboxExportService` im Application-Layer.
