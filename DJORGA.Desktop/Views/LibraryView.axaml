@@ -1,0 +1,230 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="using:DJORGA.Desktop.ViewModels"
+             xmlns:entities="using:DJORGA.Domain.Entities"
+             xmlns:conv="using:DJORGA.Desktop.Converters"
+             mc:Ignorable="d" d:DesignWidth="1000" d:DesignHeight="600"
+             x:Class="DJORGA.Desktop.Views.LibraryView"
+             x:DataType="vm:LibraryViewModel">
+    
+    <UserControl.Resources>
+        <conv:BitmapAssetValueConverter x:Key="BitmapConverter" />
+        <conv:MoodToColorConverter x:Key="MoodToColorConverter" />
+    </UserControl.Resources>
+
+    <Grid ColumnDefinitions="250, *" Margin="20">
+        <!-- 1. Left Sidebar: Workflow, Smart Collections & Playlists -->
+        <Border Grid.Column="0" Background="#1a1a1a" CornerRadius="15" Margin="0,0,20,0" Padding="15">
+            <Grid RowDefinitions="Auto, Auto, Auto, *, Auto, *, Auto">
+                <!-- Workflow Trichter -->
+                <TextBlock Grid.Row="0" Text="Workflow" FontSize="18" FontWeight="SemiBold" Margin="0,0,0,15"/>
+                
+                <StackPanel Grid.Row="1" Spacing="5" Margin="0,0,0,20">
+                    <Button HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" 
+                            Background="Transparent"
+                            Command="{Binding SetWorkflowModeCommand}" CommandParameter="All">
+                        <StackPanel Orientation="Horizontal" Spacing="10">
+                            <Path Data="M4 10h3v7H4zM10.5 3h3v14h-3zM17 14h3v3h-3z" Fill="White" Stretch="Uniform" Width="14"/>
+                            <TextBlock Text="All Tracks"/>
+                        </StackPanel>
+                    </Button>
+
+                    <Button HorizontalAlignment="Stretch" HorizontalContentAlignment="Left"
+                            Background="Transparent"
+                            Command="{Binding SetWorkflowModeCommand}" CommandParameter="NeedsAnalysis">
+                        <Grid ColumnDefinitions="*, Auto">
+                            <StackPanel Orientation="Horizontal" Spacing="10">
+                                <Path Data="M19.8 18.4L14 10.67V6.5l1.35-1.69c.26-.33.03-.81-.39-.81H9.04c-.42 0-.65.48-.39.81L10 6.5v4.17L4.2 18.4c-.49.66-.02 1.6.8 1.6h14c.82 0 1.29-.94.8-1.6z" 
+                                      Fill="#FFC107" Stretch="Uniform" Width="14"/>
+                                <TextBlock Text="Needs Analysis"/>
+                            </StackPanel>
+                            <Border Grid.Column="1" Background="#333" CornerRadius="10" Padding="6,2" Margin="5,0,0,0">
+                                <TextBlock Text="{Binding NeedsAnalysisCount}" FontSize="10" FontWeight="Bold"/>
+                            </Border>
+                        </Grid>
+                    </Button>
+
+                    <Button HorizontalAlignment="Stretch" HorizontalContentAlignment="Left"
+                            Background="Transparent"
+                            Command="{Binding SetWorkflowModeCommand}" CommandParameter="Orphans">
+                        <Grid ColumnDefinitions="*, Auto">
+                            <StackPanel Orientation="Horizontal" Spacing="10">
+                                <Path Data="M20 6h-8l-2-2H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm-6 10H7v-2h7v2zm3-4H7v-2h10v2z" 
+                                      Fill="#FF5252" Stretch="Uniform" Width="14"/>
+                                <TextBlock Text="Orphans"/>
+                            </StackPanel>
+                            <Border Grid.Column="1" Background="#333" CornerRadius="10" Padding="6,2" Margin="5,0,0,0">
+                                <TextBlock Text="{Binding OrphansCount}" FontSize="10" FontWeight="Bold"/>
+                            </Border>
+                        </Grid>
+                    </Button>
+                </StackPanel>
+
+                <TextBlock Grid.Row="2" Text="Collections" FontSize="18" FontWeight="SemiBold" Margin="0,0,0,15"/>
+                
+                <ListBox Grid.Row="3" ItemsSource="{Binding SmartCollections}" 
+                         SelectedItem="{Binding SelectedCollection}"
+                         Background="Transparent">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate x:DataType="entities:SmartCollection">
+                            <StackPanel Orientation="Horizontal" Spacing="10" Margin="5">
+                                <Path Data="M10 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2h-8l-2-2z" 
+                                      Fill="#4CAF50" Stretch="Uniform" Width="14"/>
+                                <TextBlock Text="{Binding Name}" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+
+                <TextBlock Grid.Row="4" Text="Playlists" FontSize="18" FontWeight="SemiBold" Margin="0,20,0,10"/>
+
+                <ListBox x:Name="PlaylistsListBox" Grid.Row="5" ItemsSource="{Binding Playlists}" 
+                         SelectedItem="{Binding SelectedPlaylist}"
+                         Background="Transparent"
+                         DragDrop.AllowDrop="True">
+                    <ListBox.ContextMenu>
+                        <ContextMenu>
+                            <MenuItem Header="Rename Playlist" Command="{Binding RenamePlaylistCommand}" CommandParameter="{Binding SelectedPlaylist}">
+                                <MenuItem.Icon>
+                                    <Path Data="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25z" Fill="White" Stretch="Uniform" Width="10"/>
+                                </MenuItem.Icon>
+                            </MenuItem>
+                            <MenuItem Header="Delete Playlist" Command="{Binding DeletePlaylistCommand}" CommandParameter="{Binding SelectedPlaylist}">
+                                <MenuItem.Icon>
+                                    <Path Data="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z" Fill="#FF5252" Stretch="Uniform" Width="10"/>
+                                </MenuItem.Icon>
+                            </MenuItem>
+                        </ContextMenu>
+                    </ListBox.ContextMenu>
+                    <ListBox.ItemTemplate>
+                        <DataTemplate x:DataType="entities:Playlist">
+                            <Border Background="Transparent" Padding="5" CornerRadius="8">
+                                <StackPanel Orientation="Horizontal" Spacing="10">
+                                    <Path Data="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9V8h2v8zm4 0h-2V8h2v8z" 
+                                          Fill="#2196F3" Stretch="Uniform" Width="14"/>
+                                    <TextBlock Text="{Binding Name}" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </Border>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+
+                <StackPanel Grid.Row="6" Spacing="5" Margin="0,10,0,0">
+                    <Button Content="+ New Collection" 
+                            Command="{Binding CreateCollectionCommand}"
+                            HorizontalAlignment="Stretch"
+                            Background="#333" CornerRadius="8"/>
+                    <Button Content="+ New Playlist" 
+                            Command="{Binding CreatePlaylistCommand}"
+                            HorizontalAlignment="Stretch"
+                            Background="#333" CornerRadius="8"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <!-- 2. Main Content: Filter & Grid -->
+        <Grid Grid.Column="1" RowDefinitions="Auto, *, Auto">
+            <!-- Header & Search -->
+            <Grid Grid.Row="0" ColumnDefinitions="*, Auto, Auto" Margin="0,0,0,20">
+                <TextBox Grid.Column="0" 
+                         Text="{Binding SearchText}" 
+                         Watermark="Search Title, Artist or Genre..." 
+                         HorizontalAlignment="Stretch"
+                         Classes="search"/>
+
+                <Button Grid.Column="1" Content="Export XML" Command="{Binding ExportCommand}" 
+                        Margin="15,0,0,0" Classes="secondary"/>
+
+                <Button Grid.Column="2" Content="Import XML" Command="{Binding ImportCommand}" 
+                        IsEnabled="{Binding !IsLoading}" Margin="15,0,0,0"/>
+                
+                <ProgressBar Grid.Column="3" IsIndeterminate="True" IsVisible="{Binding IsLoading}" 
+                             Width="100" Height="2" VerticalAlignment="Center" Margin="15,0,0,0"/>
+            </Grid>
+
+            <!-- DataGrid -->
+            <Border Grid.Row="1" CornerRadius="15" Background="#252525" ClipToBounds="True">
+                <DataGrid x:Name="TracksGrid"
+                          ItemsSource="{Binding Tracks}"
+                          SelectedItem="{Binding SelectedTrack}"
+                          SelectionMode="Extended"
+                          AutoGenerateColumns="False"
+                          IsReadOnly="True"
+                          GridLinesVisibility="None"
+                          HeadersVisibility="Column"
+                          BorderThickness="0"
+                          DragDrop.AllowDrop="False">
+                    <DataGrid.ContextMenu>
+                        <ContextMenu>
+                            <MenuItem Header="Play Track" Command="{Binding PlayTrackCommand}" CommandParameter="{Binding SelectedTrack}">
+                                <MenuItem.Icon>
+                                    <Path Data="M8 5v14l11-7z" Fill="White" Stretch="Uniform" Width="10"/>
+                                </MenuItem.Icon>
+                            </MenuItem>
+                            <Separator />
+                            <MenuItem Header="Edit Metadata" Command="{Binding UpdateTrackCommand}" CommandParameter="{Binding SelectedTrack}">
+                                <MenuItem.Icon>
+                                    <Path Data="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z" Fill="White" Stretch="Uniform" Width="10"/>
+                                </MenuItem.Icon>
+                            </MenuItem>
+                            <MenuItem Header="Remove from Library" Command="{Binding DeleteTrackCommand}" CommandParameter="{Binding SelectedTrack}">
+                                <MenuItem.Icon>
+                                    <Path Data="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z" Fill="#FF5252" Stretch="Uniform" Width="10"/>
+                                </MenuItem.Icon>
+                            </MenuItem>
+                        </ContextMenu>
+                    </DataGrid.ContextMenu>
+                    <DataGrid.Columns>
+                        <DataGridTemplateColumn Width="10">
+                            <DataTemplate x:DataType="vm:TrackViewModel">
+                                <Border Background="{Binding Mood, Converter={StaticResource MoodToColorConverter}}" 
+                                        VerticalAlignment="Stretch" HorizontalAlignment="Stretch" 
+                                        ToolTip.Tip="{Binding Mood}" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn>
+
+                        <DataGridTemplateColumn Header="St" Width="30">
+                            <DataTemplate x:DataType="vm:TrackViewModel">
+                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
+                                    <!-- Analyse Status -->
+                                    <Path Data="M19.8 18.4L14 10.67V6.5l1.35-1.69c.26-.33.03-.81-.39-.81H9.04c-.42 0-.65.48-.39.81L10 6.5v4.17L4.2 18.4c-.49.66-.02 1.6.8 1.6h14c.82 0 1.29-.94.8-1.6z" 
+                                          Fill="#FFC107" Stretch="Uniform" Width="12" IsVisible="{Binding !IsAnalyzed}" ToolTip.Tip="Needs Analysis"/>
+                                    <Path Data="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" 
+                                          Fill="#4CAF50" Stretch="Uniform" Width="12" IsVisible="{Binding IsAnalyzed}" ToolTip.Tip="Analyzed"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </DataGridTemplateColumn>
+
+                        <DataGridTemplateColumn Width="50">
+                            <DataTemplate x:DataType="vm:TrackViewModel">
+                                <Button Command="{Binding $parent[UserControl].((vm:LibraryViewModel)DataContext).PlayTrackCommand}" 
+                                        CommandParameter="{Binding}"
+                                        Width="30" Height="30" CornerRadius="15" Padding="0" Background="Transparent">
+                                    <Path Data="M8 5v14l11-7z" Fill="White" Stretch="Uniform" Width="12"/>
+                                </Button>
+                            </DataTemplate>
+                        </DataGridTemplateColumn>
+
+                        <DataGridTemplateColumn Header="Cover" Width="60">
+                            <DataTemplate x:DataType="vm:TrackViewModel">
+                                <Border Width="40" Height="40" CornerRadius="5" ClipToBounds="True" Background="#333" Margin="5">
+                                    <Image Source="{Binding CoverArtPath, Converter={StaticResource BitmapConverter}}" Stretch="UniformToFill" />
+                                </Border>
+                            </DataTemplate>
+                        </DataGridTemplateColumn>
+
+                        <DataGridTextColumn Header="Artist" Binding="{Binding Artist}" Width="*" />
+                        <DataGridTextColumn Header="Title" Binding="{Binding Title}" Width="2*" />
+                        <DataGridTextColumn Header="BPM" Binding="{Binding Bpm}" Width="80" />
+                        <DataGridTextColumn Header="Key" Binding="{Binding Key}" Width="80" />
+                        <DataGridTextColumn Header="Genre" Binding="{Binding Genre}" Width="*" />
+                    </DataGrid.Columns>
+                </DataGrid>
+            </Border>
+
+            <TextBlock Grid.Row="2" Text="{Binding StatusMessage}" FontSize="12" Foreground="Gray" Margin="0,10,0,0" HorizontalAlignment="Right"/>
+        </Grid>
+    </Grid>
+</UserControl>

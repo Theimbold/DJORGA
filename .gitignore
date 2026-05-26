@@ -361,3 +361,7 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+# DJORGA runtime artifacts
+djorga.db
+DJORGA_Import_Log.txt
+*_Import_Log.txt
